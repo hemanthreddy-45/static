@@ -4,12 +4,11 @@ provider "aws" {
 
 # Create an S3 bucket for hosting the static website
 resource "aws_s3_bucket" "website_bucket" {
-  bucket = "demo-bucket-name"  # Replace this with your desired bucket name
-  
+  bucket = "demo-bucket"  # Replace this with your desired bucket name
 
   website {
     index_document = "index.html"      # Specify the main entry point of your website
-    
+
   }
 }
 
@@ -18,16 +17,25 @@ data "http" "index_html" {
   url = "https://github.com/hemanthreddy-45/static/blob/main/index.html"
 }
 
-# Upload the HTML file to the S3 bucket
-resource "aws_s3_bucket_object" "website_object" {
-  bucket = aws_s3_bucket.website_bucket.id
+# Upload the HTML files to the S3 bucket
+resource "aws_s3_bucket_object" "index_html_object" {
+  bucket = aws_s3_bucket.website_bucket.bucket
   key    = "index.html"
   acl    = "public-read"
   content_type = "text/html"
-  source = data.http.index_html.body_raw
+  source = data.http.index_html.body
+}
+
+
+resource "aws_s3_bucket_object" "error_html_object" {
+  bucket = aws_s3_bucket.website_bucket.bucket
+  key    = "error.html"
+  acl    = "public-read"
+  content_type = "text/html"
+  source = data.http.error_html.body_raw
 }
 
 # Output the website URL
 output "website_url" {
-  value = aws_s3_bucket.website_bucket.website_endpoint
+  value = aws_s3_bucket.website_bucket.website_domain
 }
