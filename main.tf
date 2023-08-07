@@ -5,7 +5,7 @@ provider "aws" {
 # Create an S3 bucket for hosting the static website
 resource "aws_s3_bucket" "website_bucket" {
   bucket = "demo-bucket"  # Replace this with your desired bucket name
-  aws_s3_bucket_acl    = "public-read"              # Make the bucket content publicly readable
+         # Make the bucket content publicly readable
 }
 
 # Configure the website hosting for the S3 bucket
