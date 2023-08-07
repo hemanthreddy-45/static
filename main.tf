@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "website_bucket" {
 
 # Fetch the index.html content from GitHub and upload it to the S3 bucket
 data "http" "index_html" {
-  url = "https://raw.githubusercontent.com/your-github-username/your-repo-name/main/index.html"
+  url = "https://github.com/hemanthreddy-45/static/blob/main/index.html"
 }
 
 # Upload the HTML file to the S3 bucket
