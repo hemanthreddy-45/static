@@ -12,7 +12,6 @@ resource "aws_s3_bucket" "website_bucket" {
 resource "aws_s3_bucket_website_configuration" "website_config" {
   bucket = aws_s3_bucket.website_bucket.bucket
   index_document = "index.html"      # Specify the main entry point of your website
-  error_document = "error.html"      # Specify the error page for the website
 }
 
 # Fetch the index.html content from GitHub and upload it to the S3 bucket
@@ -27,10 +26,6 @@ resource "aws_s3_bucket_object" "index_html_object" {
   acl    = "public-read"
   content_type = "text/html"
   source = data.http.index_html.body
-}
-
-data "http" "error_html" {
-  url = "https://raw.githubusercontent.com/your-github-username/your-repo-name/main/error.html"
 }
 
 resource "aws_s3_bucket_object" "error_html_object" {
